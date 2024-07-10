@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.DataAccess", "TaxCRM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.Domain", "TaxCRM.Domain\TaxCRM.Domain.csproj", "{D0C944C6-211E-40A9-A559-4961077EF638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCRM.Application", "TaxCRM.Application\TaxCRM.Application.csproj", "{C0790A50-8A0D-44CC-B400-A5B2DE40A8D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.Application", "TaxCRM.Application\TaxCRM.Application.csproj", "{C0790A50-8A0D-44CC-B400-A5B2DE40A8D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCRM.Utils", "TaxCRM.Utils\TaxCRM.Utils.csproj", "{1230E3DF-E1D0-418F-B0B9-8E2DCAFEA491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.Utils", "TaxCRM.Utils\TaxCRM.Utils.csproj", "{1230E3DF-E1D0-418F-B0B9-8E2DCAFEA491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCRM.API", "TaxCRM.API\TaxCRM.API.csproj", "{A516A4CF-923A-442F-BB30-FC6637061653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.API", "TaxCRM.API\TaxCRM.API.csproj", "{A516A4CF-923A-442F-BB30-FC6637061653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

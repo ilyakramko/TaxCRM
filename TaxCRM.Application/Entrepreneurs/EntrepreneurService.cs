@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using TaxCRM.Application.Mail;
 using TaxCRM.Domain.Entrepreneurs;
 using TaxCRM.Domain.Results;
 using TaxCRM.Domain.Results.Errors;
@@ -6,7 +7,7 @@ using TaxCRM.Utils.Guards;
 
 namespace TaxCRM.Application.Entrepreneurs;
 
-public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository, IEntrepreneurProfileRepository entrepreneurProfileRepository)
+public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository, IEntrepreneurProfileRepository entrepreneurProfileRepository, IMailService mailService)
 {
     public async Task<Result<EntrepreneurView>> Create(EntrepreneurView view)
     {
@@ -35,6 +36,11 @@ public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository,
 
     public async Task<Result<EntrepreneurProfileView>> AddProfile(EntrepreneurProfileView view, Guid entrepreneurId)
     {
+        var entrepreneur = await entrepreneurRepository.Get(entrepreneurId);
+
+        if (entrepreneur == null)
+            return Result<EntrepreneurProfileView>.FromFailure(Errors.Entrepreneur.NotFound);
+
         var newProfile = EntrepreneurProfile.Create(view.Country, view.TaxPayerNumber, entrepreneurId);
 
         if (!newProfile.Success)
@@ -44,6 +50,8 @@ public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository,
         Guard.ArgumentIsNotNull(newProfile.Data, "The success result data shouldn't be null");
 
         var profile = await entrepreneurProfileRepository.Add(newProfile.Data);
+
+        await mailService.SendEntrepreneurProfileCreationEmail("kremkoilya@gmail.com", $"{entrepreneur.FirstName} {entrepreneur.LastName}", profile.Country.ToString());
 
         return Result<EntrepreneurProfileView>.FromSuccess(profile.Adapt<EntrepreneurProfileView>());
     }

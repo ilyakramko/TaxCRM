@@ -2,6 +2,7 @@
 using TaxCRM.Application.Entrepreneurs;
 using TaxCRM.Application.Incomes;
 using TaxCRM.Application.Infrastructure;
+using TaxCRM.Application.Mail;
 
 namespace TaxCRM.Application;
 
@@ -13,5 +14,6 @@ public static class ServiceRegistration
 
         serviceCollection.AddScoped<EntrepreneurService>();
         serviceCollection.AddScoped<IncomeService>();
+        serviceCollection.AddScoped<IMailService, SendGridMailService>();
     }
 }
