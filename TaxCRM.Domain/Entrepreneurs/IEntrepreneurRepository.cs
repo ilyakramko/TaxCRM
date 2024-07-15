@@ -10,4 +10,5 @@ public interface IEntrepreneurRepository : IRepository<Entrepreneur>
 public interface IEntrepreneurProfileRepository : IRepository<EntrepreneurProfile> 
 {
     Task<ICollection<EntrepreneurProfile>> GetByEntrepreneur(Guid entrepreneurId);
+    Task<bool> AnyByEntrepreneurAndCountry(Guid entrepreneurId, Country country);
 }

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.Utils", "TaxCRM.Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxCRM.API", "TaxCRM.API\TaxCRM.API.csproj", "{A516A4CF-923A-442F-BB30-FC6637061653}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCRM.MailNotification", "TaxCRM.MailNotification\TaxCRM.MailNotification.csproj", "{0AD7DAA8-014B-46EC-8D3C-6E87E340177A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A516A4CF-923A-442F-BB30-FC6637061653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A516A4CF-923A-442F-BB30-FC6637061653}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A516A4CF-923A-442F-BB30-FC6637061653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD7DAA8-014B-46EC-8D3C-6E87E340177A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD7DAA8-014B-46EC-8D3C-6E87E340177A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD7DAA8-014B-46EC-8D3C-6E87E340177A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD7DAA8-014B-46EC-8D3C-6E87E340177A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

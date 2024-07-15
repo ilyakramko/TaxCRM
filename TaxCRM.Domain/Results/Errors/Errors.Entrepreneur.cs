@@ -17,5 +17,7 @@ public static partial class Errors
         public static Error CountryIdNotValid = new Error($"{CodePrefix}.CountryIdNotValid", ErrorType.Argument, "The country identifier isn't valid");
 
         public static Error NotFound = new Error($"{CodePrefix}.NotFound", ErrorType.NotFound, "Entrepreneur profile for provided Id was not found");
+
+        public static Error AlreadyExists = new Error($"{CodePrefix}.AlreadyExists", ErrorType.Argument, "Entrepreneur profile for provided country already exists");
     }
 }

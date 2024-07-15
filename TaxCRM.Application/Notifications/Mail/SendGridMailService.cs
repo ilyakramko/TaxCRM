@@ -2,7 +2,7 @@
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace TaxCRM.Application.Mail;
+namespace TaxCRM.Application.Notifications.Mail;
 
 public class SendGridMailService : IMailService
 {
@@ -18,14 +18,14 @@ public class SendGridMailService : IMailService
         client = new SendGridClient(this.options.ApiKey);
     }
 
-    public async Task SendEntrepreneurProfileCreationEmail(string toEmail, string fullName, string country)
+    public async Task SendEntrepreneurProfileCreationEmail(CreationEmailMessage message)
     {
         ArgumentException.ThrowIfNullOrEmpty(nameof(options.EntrepreneurProfileCreationTemplate));
 
         var from = new EmailAddress(options.FromEmail);
-        var to = new EmailAddress(toEmail);
+        var to = new EmailAddress(message.toEmail);
 
-        var msg = MailHelper.CreateSingleTemplateEmail(from, to, options.EntrepreneurProfileCreationTemplate, new { Name = fullName, Country = country });
+        var msg = MailHelper.CreateSingleTemplateEmail(from, to, options.EntrepreneurProfileCreationTemplate, new { Name = message.fullName, Country = message.country });
 
         await client.SendEmailAsync(msg);
     }
