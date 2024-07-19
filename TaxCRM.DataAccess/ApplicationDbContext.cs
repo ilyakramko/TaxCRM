@@ -19,6 +19,7 @@ public class ApplicationDbContext : DbContext
             a.HasKey(e => e.Id);
             a.Property(e => e.FirstName).IsRequired().UseCollation("SQL_Latin1_General_CP1_CS_AS").HasMaxLength(100);
             a.Property(e => e.LastName).IsRequired().UseCollation("SQL_Latin1_General_CP1_CS_AS").HasMaxLength(100);
+            a.Property(e => e.Email).IsRequired().UseCollation("SQL_Latin1_General_CP1_CS_AS").HasMaxLength(100);
         });
 
         builder.Entity<EntrepreneurProfile>(a =>
