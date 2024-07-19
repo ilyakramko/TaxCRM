@@ -45,7 +45,7 @@ public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository,
             return Result<EntrepreneurProfileView>.FromFailure(newProfile.Error);
 
         //Refactor Result to avoid such checks everywhere?
-        Guard.ArgumentIsNotNull(newProfile.Data, "The success result data shouldn't be null");
+        //Guard.ArgumentIsNotNull(newProfile.Data, "The success result data shouldn't be null");
 
         var profileExists = await entrepreneurProfileRepository.AnyByEntrepreneurAndCountry(entrepreneurId, newProfile.Data.Country);
         if (profileExists)
@@ -53,7 +53,7 @@ public class EntrepreneurService(IEntrepreneurRepository entrepreneurRepository,
 
         var profile = await entrepreneurProfileRepository.Add(newProfile.Data);
 
-        await notificationService.SendEntrepreneurProfileCreationNotification("", $"{entrepreneur.FirstName} {entrepreneur.LastName}", profile.Country.ToString());
+        await notificationService.SendEntrepreneurProfileCreationNotification(entrepreneur.Email, $"{entrepreneur.FirstName} {entrepreneur.LastName}", profile.Country.ToString());
 
         return Result<EntrepreneurProfileView>.FromSuccess(profile.Adapt<EntrepreneurProfileView>());
     }

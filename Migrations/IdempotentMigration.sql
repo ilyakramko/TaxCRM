@@ -89,3 +89,28 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240719132023_AddEmailField'
+)
+BEGIN
+    ALTER TABLE [Entrepreneurs] ADD [Email] nvarchar(100) COLLATE SQL_Latin1_General_CP1_CS_AS NOT NULL DEFAULT N'';
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20240719132023_AddEmailField'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20240719132023_AddEmailField', N'8.0.3');
+END;
+GO
+
+COMMIT;
+GO
+
