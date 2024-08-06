@@ -4,6 +4,7 @@ using TaxCRM.Utils.Guards;
 
 namespace TaxCRM.API.Infrastructure.Responses
 {
+    //TODO: use implicit operators?
     public static class ResultToResponseMapper
     {
         public static ActionResult ToResult(this Result result) =>

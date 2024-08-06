@@ -4,6 +4,5 @@ public static partial class Errors
 {
     public static class Common
     {
-        public static Error Empty = new Error(String.Empty, ErrorType.Empty, String.Empty);
     }
 }

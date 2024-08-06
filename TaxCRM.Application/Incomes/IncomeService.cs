@@ -1,9 +1,8 @@
 ﻿using Mapster;
-using TaxCRM.Domain.Common;
 using TaxCRM.Domain.Incomes;
 using TaxCRM.Domain.Results;
 using TaxCRM.Domain.Results.Errors;
-using TaxCRM.Utils;
+using TaxCRM.Utils.Guards;
 
 namespace TaxCRM.Application.Incomes;
 
@@ -11,29 +10,15 @@ public class IncomeService(IIncomeRepository incomeRepository)
 {
     public async Task<Result<IncomeView>> AddIncome(IncomeView view, Guid entrepreneurProfileId)
 	{
-		//Use DateTime Provider		
-		var now = DateTime.UtcNow;
-		var utcDate = view.Date.ToUniversalTime();
+        var newIncome = Income.Create(view.Amount, view.Currency, view.Date, entrepreneurProfileId);
+        if (!newIncome.Success)
+            return newIncome.Error ?? throw new ArgumentException("The error shouldn't be null");
 
-		if (view.Amount <= 0)
-			return Result<IncomeView>.FromFailure(Errors.Income.AmountAboveZero);
-        
-        if (!EnumEx.TryValidate<Currency>(view.Currency, out var currency))
-            return Result<IncomeView>.FromFailure(Errors.Income.CurrencyIdNotValid);
+        Guard.ArgumentIsNotNull(newIncome.Data, "The success result data shouldn't be null");
 
-		if (utcDate > now)
-			return Result<IncomeView>.FromFailure(Errors.Income.IncomeDate);
+        var income = await incomeRepository.Add(newIncome.Data);
 
-        var income = new Income()
-		{
-			Value = new Money(view.Amount, currency),
-			Date = utcDate,
-			EntrepreneurProfileId = entrepreneurProfileId
-		};
-
-		income = await incomeRepository.Add(income);
-
-		return Result<IncomeView>.FromSuccess(income.Adapt<IncomeView>());
+		return income.Adapt<IncomeView>();
     }
 
 	public async Task<Result<IncomeView>> GetIncome(Guid id)
@@ -41,14 +26,17 @@ public class IncomeService(IIncomeRepository incomeRepository)
 		var income = await incomeRepository.Get(id);
 
         if (income is null)
-            return Result<IncomeView>.FromFailure(Errors.Income.NotFound);
+            return Errors.Income.NotFound;
 
-        return Result<IncomeView>.FromSuccess(income.Adapt<IncomeView>());
+        return income.Adapt<IncomeView>();
     }
 
-    public async Task<Result<ICollection<IncomeView>>> GetIncomes(Guid profileId)
+    //TODO: Return type is awful
+    public async Task<Result<List<IncomeView>>> GetIncomes(Guid profileId)
 	{
 		var incomes = await incomeRepository.GetByProfile(profileId);
-        return Result<ICollection<IncomeView>>.FromSuccess(incomes.Adapt<ICollection<IncomeView>>());
+        return incomes.Adapt<List<IncomeView>>();
     }
+
+    //TODO: Able to delete the income only if no info accosiated with it
 }

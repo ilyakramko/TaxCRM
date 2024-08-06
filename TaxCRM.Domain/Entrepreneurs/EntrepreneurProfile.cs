@@ -22,7 +22,7 @@ public class EntrepreneurProfile : Entity
     public static Result<EntrepreneurProfile> Create(string country, string taxPayerNumber, Guid entrepreneurId)
     {
         if (!EnumEx.TryValidate<Country>(country, out var parsedCountry))
-            return Result<EntrepreneurProfile>.FromFailure(Errors.EntrepreneurProfile.CountryIdNotValid);
+            return Errors.EntrepreneurProfile.CountryIdNotValid;
 
         var result = parsedCountry switch
         {
@@ -31,9 +31,9 @@ public class EntrepreneurProfile : Entity
         };
 
         if (!result)
-            return Result<EntrepreneurProfile>.FromFailure(Errors.EntrepreneurProfile.InvalidTaxPayerNumber);
+            return Errors.EntrepreneurProfile.InvalidTaxPayerNumber;
 
-        return Result<EntrepreneurProfile>.FromSuccess(new EntrepreneurProfile(parsedCountry, taxPayerNumber, entrepreneurId));
+        return new EntrepreneurProfile(parsedCountry, taxPayerNumber, entrepreneurId);
     }
 }
 

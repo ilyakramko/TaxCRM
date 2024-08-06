@@ -20,7 +20,11 @@ public static class ServiceRegistration
 
         serviceCollection.AddScoped<EntrepreneurService>();
         serviceCollection.AddScoped<IncomeService>();
-        //serviceCollection.AddScoped<IMailService, SendGridMailService>();
+
+#if DEBUG
+        serviceCollection.AddScoped<IMailService, SendGridMailService>();
+#else
         serviceCollection.AddScoped<IMailService, ServiceBusMailService>();
+#endif
     }
 }

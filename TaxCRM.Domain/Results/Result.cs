@@ -4,35 +4,40 @@
 public class Result
 {
     public bool Success { get; init; } = false;
-    public Error Error { get; init; }
+    public Error? Error { get; init; }
 
-    protected Result(bool success, Error? error)
+    protected Result(Error error)
     {
-        Success = success;
-        Error = error ?? Errors.Errors.Common.Empty;
+        Success = false;
+        Error = error;
     }
 
-    public static Result FromSuccess() =>
-        new Result(true, null);
+    protected Result()
+    {
+        Success = true;
+        Error = default;
+    }
 
-    public static Result FromFailure(Error error) =>
-        new Result(false, error);
+    public static implicit operator Result(Error error) => new(error);
 }
 
 
-public sealed class Result<T> : Result
+public sealed class Result<TValue> : Result
 {
-    public T? Data { get; init; } = default;
+    public TValue? Data { get; init; } = default;
 
-    private Result(T? data, bool success, Error? error) : base(success, error)
+    private Result(TValue? data) : base()
     {
         Data = data;
     }
 
-    public static Result<T> FromSuccess(T data) =>
-        new Result<T>(data, true, null);
+    private Result(Error error) : base(error)
+    {
+        Data = default;
+    }
 
-    public static new Result<T> FromFailure(Error error) =>
-        new Result<T>(default, false, error);
+    public static implicit operator Result<TValue>(TValue data) => new(data);
+
+    public static implicit operator Result<TValue>(Error error) => new(error);
 }
 
